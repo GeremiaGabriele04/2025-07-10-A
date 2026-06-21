@@ -1,6 +1,9 @@
-DROP DATABASE IF EXISTS `bike_store_full`;
-CREATE DATABASE IF NOT EXISTS `bike_store_full` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */;
-USE `bike_store_full`;
+DROP DATABASE IF EXISTS bike_store_full;
+CREATE DATABASE bike_store_full
+DEFAULT CHARACTER SET utf8mb4
+COLLATE utf8mb4_general_ci;
+
+USE bike_store_full;USE `bike_store_full`;
 
 CREATE TABLE IF NOT EXISTS `brands` (
   `brand_id` int NOT NULL,

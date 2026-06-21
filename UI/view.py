@@ -23,12 +23,14 @@ class View(ft.UserControl):
         self.txt_result = None
         self.txt_container = None
 
+
     def load_interface(self):
         # title
         self._title = ft.Text("Esame del 10/07/2025 - Turno A", color="green", size=24)
         self._page.controls.append(self._title)
 
         self._ddcategory = ft.Dropdown(label="Category", width=200)
+        self._controller.fillDDCategory()
 
         self._dp1 = ft.DatePicker(
             on_change=lambda e: print(f"Giorno selezionato: {self._dp1.value}"),
@@ -44,6 +46,7 @@ class View(ft.UserControl):
             on_change=lambda e: print(f"Giorno selezionato: {self._dp2.value}"),
             on_dismiss=lambda e: print("Data non selezionata")
         )
+
         self._page.overlay.append(self._dp2)
         self._btnCal2 = ft.ElevatedButton("End date",
                                               icon=ft.icons.CALENDAR_MONTH,
