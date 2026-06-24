@@ -51,14 +51,42 @@ class Controller:
         self._view.update_page()
 
     def handleCercaCammino(self, e):
+        if self._view._txtInLun.value == "":
+            self._view.txt_result.controls.clear()
+            self._view.txt_result.controls.append(ft.Text("Scegliere una lunghezza del cammino valida.", color="red"))
+            self._view.update_page()
+            return
+
+        try:
+            lun = int(self._view._txtInLun.value)
+        except ValueError:
+            self._view.txt_result.controls.clear()
+            self._view.txt_result.controls.append(ft.Text("Scegliere una lunghezza del cammino valida.", color="red"))
+            self._view.update_page()
+            return
+
         if self._choiceProdStart is None or self._choiceProdEnd is None:
             self._view.txt_result.controls.clear()
             self._view.txt_result.controls.append(ft.Text("Scegliere un prodotto di partenza e uno di arrivo", color="red"))
             self._view.update_page()
             return
 
+        path, score = self._model.getBestPath(lun, self._choiceProdStart, self._choiceProdEnd)
+
+        if len(path) == 0:
+            self._view.txt_result.controls.clear()
+            self._view.txt_result.controls.append(
+                ft.Text("Non ho trovato un cammino tra questi due prodotti."))
+            self._view.update_page()
+            return
+
         self._view.txt_result.controls.clear()
-        self._view.txt_result.controls.append(ft.Text("Caricando un cammino....(non è vero, ancora da fare)"))
+        #self._view.txt_result.controls.append(ft.Text("Caricando un cammino....(non è vero, ancora da fare)"))
+        self._view.txt_result.controls.append(
+            ft.Text(f"Ecco il cammino migliore fra {self._choiceProdStart} e {self._choiceProdEnd}:"))
+        for p in path:
+            self._view.txt_result.controls.append(ft.Text(p))
+        self._view.txt_result.controls.append(ft.Text(f"Score: {score}"))
         self._view.update_page()
 
     def setDates(self):
